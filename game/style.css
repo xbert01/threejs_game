@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -7,3 +9,45 @@
 
 }
   
+
+#score {
+  position: absolute;
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.5em;
+  color: white;
+  transform: translate(-50%, -50%);
+  opacity: 0.9;
+  max-width: 100px;
+  text-align: center;
+  line-height: 1.6em;
+}
+
+#results {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(20, 20, 20, 0.75);
+  display: none;
+  z-index: 51;
+}
+
+#results .content {
+  font-family: "Press Start 2P", cursive;
+  color: #ffffff;
+  max-width: 350px;
+  padding: 50px;
+  border-radius: 20px;
+}
+
+#instruction {
+ 
+    outline: none;
+    cursor: pointer;
+    border: none;
+    box-shadow: 3px 5px 0px 0px rgba(0, 0, 0, 0.75);
+   
+  
+
+}

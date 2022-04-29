@@ -16,7 +16,9 @@ const trackRadius = 225;
 const trackWidth  = 45;
 const innerTrackRadius = trackRadius - trackWidth; 
 const outerTrackRadius = trackRadius + trackWidth;
-
+const scoreElement = document.getElementById("score");
+const resultsElement = document.getElementById("results");
+const instructionElement = document.getElementById("instruction");
 
 const arcAngle1  = (1/3) * Math.PI; //60 degrees
 
@@ -269,11 +271,11 @@ function getLineMarkings(mapWidth, mapHeight) {
   canvas.height = mapHeight;
   const context = canvas.getContext("2d");
 
-  context.fillStyle = '#546E90';
+  context.fillStyle = '#303030';
   context.fillRect(0, 0, mapWidth, mapHeight);
 
   context.lineWidth = 2;
-  context.strokeStyle = "#E0FFFF";
+  context.strokeStyle = "#FFDA33";
   context.setLineDash([10, 14]);
 
   // Left circle
@@ -301,6 +303,22 @@ function getLineMarkings(mapWidth, mapHeight) {
   return new THREE.CanvasTexture(canvas);
 }
 
+function positionScoreElement() {
+  const arcCenterXinPixels = (arcCenterX / cameraWidth) * window.innerWidth;
+  scoreElement.style.cssText = `
+    left: ${window.innerWidth / 2 - arcCenterXinPixels * 1.3}px;
+    top: ${window.innerHeight / 2}px
+  `;
+}
+
+function positionInstructionElement() {
+  const arcCenterXinPixels = (arcCenterX / cameraWidth) * window.innerWidth;
+  instructionElement.style.cssText = `
+    left: ${window.innerWidth / 2 - arcCenterXinPixels }px;
+    top: ${window.innerHeight / 2}px
+  `;
+}
+
 function renderMap(mapWidth, mapHeight) {
   const lineMarkingsTexture = getLineMarkings(mapWidth, mapHeight);
 
@@ -323,10 +341,12 @@ function renderMap(mapWidth, mapHeight) {
   );
 
   const fieldMesh = new THREE.Mesh(fieldGeometry, [
-    new THREE.MeshLambertMaterial({color: 0x67c240}),
-    new THREE.MeshLambertMaterial({color: 0x23311c}),
+    new THREE.MeshLambertMaterial({color: 0xECA058}),
+    new THREE.MeshLambertMaterial({color: 0xF89436}),
   ]);
 
+  positionScoreElement();
+  positionInstructionElement();
   scene.add(fieldMesh);
 
 }
@@ -461,7 +481,7 @@ const playerAngleInitial = Math.PI;
 let ready;
 let playerAngleMoved;
 let score;
-const scoreElement = document.getElementById("score")
+
 let otherVehicles = [];
 const speed = 0.0017;
 let lastTimestamp;
@@ -522,6 +542,7 @@ function addVehicle() {
 
   otherVehicles.push({mesh, type, clockwise, angle, speed});
 }
+
 
 function getVehicleSpeed(type) {
   if (type === "car") {
@@ -628,7 +649,7 @@ function hitDetection() {
   });
 
   if (hit) {
-    //if (resultsElement) resultsElement.style.display = "flex";
+    if (resultsElement) resultsElement.style.display = "flex";
     renderer.setAnimationLoop(null); // Stop animation loop
   }
 }
@@ -652,6 +673,8 @@ function reset() {
   otherVehicles.forEach((vehicle) => {
     scene.remove(vehicle.mesh);
   });
+  scoreElement.innerText = "Press UP";
+  resultsElement.style.display = "none";
 
   otherVehicles = [];
   renderer.render(scene,camera);
@@ -661,6 +684,7 @@ function reset() {
 function startGame() {
   if (ready) {
     ready = false;
+    scoreElement.innerText = 0;
     renderer.setAnimationLoop(animation);
   }
 }
@@ -672,7 +696,9 @@ window.addEventListener('resize', function ()
   renderer.setSize(width, height);
   camera.aspect = width/height;
   camera.updateProjectionMatrix();
+  positionScoreElement();
 });
+
 
 
 
