@@ -42,12 +42,21 @@
 }
 
 #instruction {
- 
-    outline: none;
-    cursor: pointer;
-    border: none;
-    box-shadow: 3px 5px 0px 0px rgba(0, 0, 0, 0.75);
-   
-  
+  position: absolute;
+  font-family: "Press Start 2P", cursive;
+  font-size: 1em;
+  color: white;
+  opacity: 0.9;
+  max-width: 300px;
+  text-align: center;
+  line-height: 1.6em;
+}
 
+@media (max-width: 1000px) {
+  #instruction {
+    font-size: 0.7em;
+  }
+  #score {
+    font-size: 1em;
+  }
 }

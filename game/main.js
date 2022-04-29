@@ -312,10 +312,11 @@ function positionScoreElement() {
 }
 
 function positionInstructionElement() {
+  
   const arcCenterXinPixels = (arcCenterX / cameraWidth) * window.innerWidth;
   instructionElement.style.cssText = `
-    left: ${window.innerWidth / 2 - arcCenterXinPixels }px;
-    top: ${window.innerHeight / 2}px
+    left: ${window.innerWidth/6 - arcCenterXinPixels}px;
+    top: ${window.innerHeight/10}px
   `;
 }
 
@@ -523,6 +524,7 @@ function animation(timestamp) {
   if (otherVehicles.length < (laps+1)/5) addVehicle();
   moveOtherVehicles(timeDelta);
   hitDetection();
+  instructionElement.innerText = 'Press ⬆️ to accelerate Press ⬇️ to decelerate';
 
   renderer.render(scene, camera);
   lastTimestamp = timestamp;
@@ -697,6 +699,7 @@ window.addEventListener('resize', function ()
   camera.aspect = width/height;
   camera.updateProjectionMatrix();
   positionScoreElement();
+  positionInstructionElement();
 });
 
 
